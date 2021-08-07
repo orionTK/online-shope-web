@@ -1,0 +1,180 @@
+header,
+#toggle-menu {
+    position: sticky;
+    top     : 0;
+    z-index : 1000;
+
+    background-color: var(--header);
+    box-shadow      : 0 1px 1px 0 rgba(0, 0, 0, .05);
+}
+
+#logo-brand {
+    font-family: 'Roboto';
+    font-size  : 3rem;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+#menu a {
+    font-size     : 14px;
+    text-transform: uppercase;
+
+    padding: 0.5rem 1rem;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+#icon {
+    font-size: 1.5rem;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+// Mutual
+.cart--icon,
+.user--function {
+
+    .cart--show,
+    .user--func--show {
+        background-color: white;
+
+        position: absolute;
+        top     : 3rem;
+        right   : -3rem;
+
+        box-shadow: 0 40px 40px 0 rgba(0, 0, 0, .05);
+    }
+
+    i:focus {
+        outline: none !important;
+    }
+
+}
+
+.cart--icon {
+    position: relative;
+
+    .cart--show {
+        display: none;
+
+        width     : 20rem;
+        max-height: 25rem;
+
+        .product--name__hover {
+            &:hover {
+                cursor: pointer;
+                color : var(--darkred);
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+.user--function {
+    position: relative;
+
+    .user--func--show {
+        display: none;
+        width  : 9rem;
+
+        p:hover {
+            background-color: var(--whitesmoke);
+            color           : var(--darkred);
+        }
+
+        p:focus {
+            outline: none;
+        }
+
+        .user--func__hover:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.cart--icon:hover .cart--show,
+.user--function:hover .user--func--show {
+    display   : block;
+    transition: 0.3s ease-in-out;
+}
+
+// Show
+.cart--show,
+.user--func--show {
+    position: relative;
+
+    &::after {
+        content: "";
+
+        position: absolute;
+
+        border-style: solid;
+        box-shadow  : 40px 40px 40px 0 rgba(0, 0, 0, .05);
+    }
+}
+
+// Triangle
+.cart--show,
+.user--func--show {
+    &::after {
+        top  : -1.5rem;
+        right: 4rem;
+
+        border       : 12px solid transparent;
+        border-bottom: 12px solid white;
+    }
+}
+
+#toggle-menu {
+    display: none;
+}
+
+@media only screen and (max-width: 992px) {
+
+    // NAVBAR
+    #top-header {
+        display: none;
+    }
+
+    #logo-brand {
+        font-size: 44px;
+    }
+
+    #menu a {
+        font-size: 13px;
+        padding  : 0.5rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    // NAVBAR 
+    header,
+    #top-header {
+        display: none;
+    }
+
+    #toggle-menu {
+        display: block;
+    }
+
+    .nav-link {
+        font-size     : 14px;
+        text-transform: uppercase;
+
+        padding: 0.25rem 1rem;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}

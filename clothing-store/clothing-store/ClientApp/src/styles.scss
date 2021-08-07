@@ -1,0 +1,55 @@
+@import './app/scss/animation';
+@import './app/scss/variable';
+@import './app/scss/product.scss';
+@import './app/scss/admin-pages.scss';
+@import './app/scss/responsive.scss';
+@import './app/scss/fontsize.scss';
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none !important;
+    color          : black !important;
+}
+
+// BUTTON
+.caption__button {
+    border       : none;
+    border-radius: 30px;
+
+    padding: 0.75rem 3rem;
+
+    letter-spacing: 1px;
+
+    &:hover {
+        color     : white;
+        background: var(--darkred);
+    }
+}
+
+.btn-search {
+    border-radius: 0 .25rem .25rem 0 !important;
+}
+
+// SPACING
+.d-flex-center {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+}
+
+// BOOTSTRAP DEFAULT
+.btn.focus,
+.btn:focus {
+    box-shadow: none !important;
+}

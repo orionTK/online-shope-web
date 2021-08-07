@@ -1,0 +1,79 @@
+<section id="men">
+    <div class="container">
+        <div class="row">
+            <!-- LEFT SIDE  -->
+            <div class="col-md-3 pt-3">
+                <div class="searching">
+                    <div class="input-group mr-sm-2">
+                        <input type="text" [(ngModel)]="keywords" class="form-control font-12"
+                            placeholder="Nhập tên sản phẩm...">
+                        <button type="submit" class="btn btn-search btn-dark font-12"
+                            (click)="searchProductByProductName(1)">Tìm kiếm</button>
+                    </div>
+                </div>
+                <hr class="my-3">
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header p-0" id="headingTwo">
+                            <h2 class="mb-0">
+                                <button (click)="getCategoryName(false)" class="btn collapsed" type="button"
+                                    data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    Phân loại hàng
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#accordionExample">
+                            <ul class="m-0 px-3">
+                                <li *ngFor="let category of lstCategoryName" class="my-2">
+                                    <a class="category--text" (click)="getProduct(1,category.categoryName)"
+                                        style="cursor:pointer;">{{ category.categoryName }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE  -->
+            <div class="col-md-9 pt-3">
+                <div class="txt--title text-secondary font-12">Trang chủ/ Sản phẩm nam</div>
+                <div class="product--block--container row">
+                    <!-- Block product  -->
+                    <div class="d-flex flex-wrap" *ngIf="products.totalRecord">
+                        <div class="product--block col-md-4"  *ngFor="let p of products.data">
+                            <div class="product--block--img">
+                                <img src="https://{{p.imageSource}}">
+                                <div class="product--block--overlay">
+                                    <button type="button" class="btn btn-dark detail__button text-uppercase font-12"
+                                        [routerLink]="['/product-detail', {id:p.productId}]">Xem chi tiết</button>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="product--name font-14 m-0 pt-2 pb-1"
+                                    [routerLink]="['/product-detail', {id:p.productId}]">
+                                    {{p.productName}}
+                                </p>
+                                <p class="product--price font-14 m-0">
+                                    {{p.price | currency: 'VND':'symbol-narrow':'.3'}}</p>
+                                    <span class="ml-2">{{p.salePrice | currency: 'VND':'symbol-narrow':'.3'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination  -->
+        <ul class="pagination d-flex justify-content-end align-items-center">
+            <li class="page-item">
+                <a href="javascript:void(0)" (click)="searchPrevious()"><i class="fas fa-long-arrow-alt-left"></i></a>
+            </li>
+            <li class="page-item mx-2">{{products.page}}</li>
+            <li class="page-item">
+                <a href="javascript:void(0)" (click)="searchNext()"><i class="fas fa-long-arrow-alt-right"></i></a>
+            </li>
+        </ul>
+    </div>
+</section>

@@ -1,0 +1,64 @@
+<section id="cart" style="background-color: white">
+    <div class="container py-3">
+        <div class="d-flex-center">
+            <h3>Giỏ hàng của bạn</h3>
+        </div>
+        <div class="d-flex-center mt-2 mb-4">
+            <div style="border: 2px solid #000; width:4rem;"></div>
+        </div>
+
+        <div class="product--header--container mb-2">
+            <div class="row product--header font-15 p-3 m-0" style="background-color: var(--whitesmoke);">
+                <div style="width:25%;">Sản phẩm</div>
+                <div class="product--header__color">Size</div>
+                <div class="product--header__color">Đơn giá</div>
+                <div class="product--header__color">Giá sale</div>
+                <div class="product--header__color">Số lượng</div>
+                <div class="product--header__color">Thành tiền</div>
+                <div class="product--header__color">Thao tác</div>
+            </div>
+        </div>
+
+        <!-- Chi tiết sản phẩm  -->
+        <div class="product--body--container px-3 py-1" >
+            <div class="product--body row font-15 m-0" *ngFor="let p of cart">
+                <div style="width:25%;">
+                    <div class="product--img--container d-flex">
+                        <img class="product--img" src="https://{{p.imageSource}}" style="width: 30%;">
+                        <h6 class="product--name font-13 pl-4" [routerLink]="['/product-detail', {id:p.productId}]">{{p.productName}}</h6>
+                    </div>
+                </div>
+                <div class="product--body--details">{{p.size}}</div>
+                <div class="product--body--details">{{p.price | currency: 'VND':'symbol-narrow':'.3'}}</div>
+                <div class="product--header__color">{{p.priceSale | currency: 'VND':'symbol-narrow':'.3'}}</div>
+                <div class="product--body--details">{{p.quantity}}</div>
+                <div class="product--body--details" style="color: var(--darkred);">{{p.total | currency: 'VND':'symbol-narrow':'.3'}}</div>
+                <div class="product--body--details product__trash" >
+                    <i class="far fa-trash-alt" (click) = DeleteProductCart(p)></i>
+                </div>
+            </div>
+        </div>
+
+        <div id="delivery" class="row p-3 font-14 m-0"><i class="fas fa-truck-moving mr-2"></i>Miễn phí vận chuyển cho
+            đơn
+            hàng từ 1.000.000đ
+        </div>
+
+        <!-- Thanh toán  -->
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6 p-3">
+                <div class="d-flex justify-content-end align-items-baseline">
+                    <p>{{SumPro}}</p>
+                    <h3 class="ml-2">{{totalMoney | currency: 'VND':'symbol-narrow':'.3'}}</h3>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-dark py-2 px-4 text-uppercase font-14 mr-2" routerLink="/"><i
+                            class="fas fa-undo mr-1"></i>Tiếp tục mua hàng</button>
+                    <button type="button" class="btn py-2 px-4 text-light text-uppercase font-14"
+                        style="background-color: var(--darkred);"(click) = "ThanhToan()" >Thanh toán</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

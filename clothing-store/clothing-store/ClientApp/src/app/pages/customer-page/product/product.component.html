@@ -1,0 +1,156 @@
+<section id="product-details">
+    <div class="container">
+        <div class="row">
+            <div class="text-secondary font-12 px-3 py-2 mx-3 my-3"
+                style="background-color: var(--whitesmoke); width: 100%;">Trang chủ/ Chi tiết sản phẩm/ <span>Mã SP: {{product.productId}}</span></div>
+
+            <!-- LEFT SIDE -->
+            <div id="carouselExampleControls" class="col-md-5 mb-3 carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="https://{{product.imageSource}}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="col-md-7 pb-4">
+
+                <!-- Product's Details  -->
+                <h5 class="font-weight-bold">{{product.productName}}</h5>
+                <div class="mb-2" style="border-bottom-width: 0.5px;
+                border-bottom-color: #dddddd;border-bottom-style:dotted"></div>
+                <div>
+                    <span class="font-weight-bold ml-2" style="color: var(--darkred);"> {{product.price | currency: 'VND':'symbol-narrow':'.3'}}</span>
+                    <p class="font-weight-bold ml-2 mt-2 font-14">{{PriceSale}}</p>
+                </div>
+
+                <!-- Options -->
+                <div class="my-3">
+                    <div class="row mb-3 d-flex align-items-baseline" [ngClass]="{'hidden': product.categoryId == 9 || product.categoryId == 26}">
+                        <label class="col-md-4">Size:</label>
+                        <select class="form-control col-md-6" [(ngModel)]="size">
+                            <option value="1">S</option>
+                            <option value="2">M</option>
+                            <option value="3">L</option>
+                        </select>
+                    </div> 
+
+                    <div class="row mb-3 d-flex align-items-baseline">
+                        <label class="col-md-4">Số lượng</label>
+                        <input [(ngModel)]="quanity"class="col-md-2 py-1 pr-2" type="number" id="quantity" name="quantity" min="1" max="10"
+                            placeholder="0">
+                        <button type="button" class="col-md-4 ml-2 btn text-light text-uppercase"
+                            style="background-color: var(--darkred);" [routerLink]="['/cart', {userId:userId}]" (click) = "AddProductCart()" >Thêm vào giỏ</button>
+                    </div>
+                </div>
+
+                <!-- Tab  -->
+                <nav class="my-3 font-14">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active text-secondary" id="nav-home-tab" data-toggle="tab"
+                            href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Mô tả</a>
+                        <a class="nav-item nav-link text-secondary" id="nav-profile-tab" data-toggle="tab"
+                            href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Điều khoản
+                            dịch vụ</a>
+                        <a class="nav-item nav-link text-secondary" id="nav-contact-tab" data-toggle="tab"
+                            href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Chính sách
+                            đổi trả</a>
+                    </div>
+                </nav>
+
+                <!-- Details Of Tabs -->
+
+                <!-- Describe  -->
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active pl-3 pr-5" id="nav-home" role="tabpanel"
+                        aria-labelledby="nav-home-tab">
+                        <p class="font-14 font-weight-bold my-1">Kích thước:</p>
+                        <div class="text-secondary">
+                            <p class="font-13 my-1">Size S</p>
+                            <p class="font-13 my-1">Size M</p>
+                            <p class="font-13 my-1">Size L</p>
+                        </div>
+
+                        <p class="font-14 font-weight-bold my-1">Form:</p>
+                        <div class="text-secondary">
+                            <p class="font-13 my-1">Mẫu mã phong phú, đa dạng, chất lượng vải luôn được đặt lên hàng
+                                đầu.
+                                Chất liệu vải tốt, đường may đẹp.</p>
+                            <p class="font-13 my-1">Mang lại cảm giác thoải mái, tự tin.</p>
+                        </div>
+                    </div>
+
+                    <!-- Services -->
+                    <div class="tab-pane fade pl-3 pr-5" id="nav-profile" role="tabpanel"
+                        aria-labelledby="nav-profile-tab">
+                        <p class="font-14 font-weight-bold my-1">1. Giới thiệu:</p>
+                        <div class="text-secondary">
+                            <p class="font-13 my-1">Chào mừng quý khách hàng đến với website chúng tôi.</p>
+                            <p class="font-13 my-1">Khi quý khách hàng truy cập vào trang website của chúng tôi có nghĩa
+                                là quý khách đồng ý với các điều khoản này. Trang web có quyền thay đổi, chỉnh sửa, thêm
+                                hoặc lược bỏ bất kỳ phần nào trong điều khoản mua bán hàng hóa này, vào bất cứ lúc nào.
+                                Các thay đổi có hiệu lực ngay khi được đăng trên trang web mà không cần thông báo trước.
+                                Và khi quý khách tiếp tục sử dụng trang web, sau khi các thay đổi về điều khoản này được
+                                đăng tải, có nghĩa là quý khách chấp nhận với những thay đổi đó.</p>
+                            <p class="font-13 my-1">Quý khách hàng vui lòng kiểm tra thường xuyên để cập nhật những thay
+                                đổi của chúng tôi.</p>
+                        </div>
+                        <p class="font-14 font-weight-bold my-1">2. Hướng dẫn sử dụng website:</p>
+                        <div class="text-secondary">
+                            <p class="font-13 my-1">Khi vào web của chúng tôi, khách hàng phải đảm bảo đủ 18 tuổi, hoặc
+                                truy cập dưới sự giám sát của cha mẹ hay người giám hộ hợp pháp. Khách hàng đảm bảo có
+                                đầy đủ hành vi dân sự để thực hiện các giao dịch mua bán hàng hóa theo quy định hiện
+                                hành của pháp luật Việt Nam.</p>
+                            <p class="font-13 my-1">Trong suốt quá trình đăng ký, quý khách đồng ý nhận email quảng cáo
+                                từ website. Nếu không muốn tiếp tục nhận mail, quý khách có thể từ chối bằng cách nhấp
+                                vào đường link ở dưới cùng trong mọi email quảng cáo.</p>
+                        </div>
+                        <p class="font-14 font-weight-bold my-1">3. Thanh toán an toàn và tiện lợi:</p>
+                        <div class="text-secondary">
+                            <p class="font-13 my-1">Người mua có thể tham khảo các phương thức thanh toán sau đây và lựa
+                                chọn áp dụng phương thức phù hợp:</p>
+                            <p class="font-13 my-1">- Thanh toán trực tiếp (người mua nhận hàng tại địa chỉ người bán)
+                            </p>
+                            <p class="font-13 my-1">- Thanh toán sau (COD – giao hàng và thu tiền tận nơi)</p>
+                            <p class="font-13 my-1">- Thanh toán online qua thẻ tín dụng, chuyển khoản</p>
+                        </div>
+                    </div>
+
+                    <!-- Return  -->
+                    <div class="tab-pane fade pl-3 pr-5" id="nav-contact" role="tabpanel"
+                        aria-labelledby="nav-contact-tab">
+                        <p class="font-14 font-weight-bold my-1">1. Điều kiện đổi trả:</p>
+                        <div class="text-secondary">
+                            <p class="font-13 my-1">Quý Khách hàng cần kiểm tra tình trạng hàng hóa và có thể đổi hàng/
+                                trả lại hàng ngay tại thời điểm giao/nhận hàng trong những trường hợp sau:</p>
+                            <p class="font-13 my-1">- Hàng không đúng chủng loại, mẫu mã trong đơn hàng đã đặt hoặc như
+                                trên website tại thời điểm đặt hàng.</p>
+                            <p class="font-13 my-1">- Không đủ số lượng, không đủ bộ như trong đơn hàng.</p>
+                            <p class="font-13 my-1">- Tình trạng bên ngoài bị ảnh hưởng như rách bao bì, bong tróc, bể
+                                vỡ…</p>
+                            <p class="font-13 my-1">Khách hàng có trách nhiệm trình giấy tờ liên quan chứng minh sự
+                                thiếu sót trên để hoàn thành việc hoàn trả/đổi trả hàng hóa. </p>
+                        </div>
+                        <p class="font-14 font-weight-bold my-1">2. Quy định về thời gian thông báo và gửi sản phẩm đổi
+                            trả:</p>
+                        <div class="text-secondary">
+                            <p class="font-13 my-2"><span class="text-dark font-weight-bold">Thời gian thông báo đổi
+                                    trả:</span> trong vòng 48h kể từ khi nhận sản phẩm đối với trường hợp sản phẩm thiếu
+                                phụ kiện, quà tặng hoặc bể vỡ.</p>
+                            <p class="font-13 my-2"><span class="text-dark font-weight-bold">Thời gian gửi chuyển trả
+                                    sản phẩm:</span> trong vòng 14 ngày kể từ khi nhận sản phẩm.</p>
+                            <p class="font-13 my-2"><span class="text-dark font-weight-bold">Địa điểm đổi trả sản
+                                    phẩm:</span>Khách hàng có thể mang hàng trực tiếp đến văn phòng/ cửa hàng của chúng
+                                tôi hoặc chuyển qua đường bưu điện.</p>
+                            <p class="font-13 my-2">Trong trường hợp Quý Khách hàng có ý kiến đóng góp/khiếu nại liên
+                                quan đến chất lượng sản phẩm, Quý Khách hàng vui lòng liên hệ đường dây chăm sóc khách
+                                hàng của chúng tôi.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

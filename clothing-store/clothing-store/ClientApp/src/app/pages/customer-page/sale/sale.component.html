@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row py-3">
+        <div class="text-secondary font-12 px-3 py-2 mx-3 mb-3"
+            style="background-color: var(--whitesmoke); width: 100%;">Trang chủ/ Sản phẩm sale</div>
+
+        <div class="d-flex flex-wrap mb-3" *ngIf="products.totalRecord">
+            <div class="product--block col-md-4 mb-3 py-0" *ngFor="let p of products.data">
+                <div class="product--block--img">
+                    <img src="https://{{p.imageSource}}">
+                    <div class="product--block--overlay">
+                        <button type="button" class="btn btn-dark detail__button text-uppercase font-13" 
+                            [routerLink]="['/product-detail', {id:p.productID}]">Xem chi tiết</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="product--name font-15 m-0 pt-2 pb-1" [routerLink]="['/product-detail', {id:p.productID}]">{{p.productName}}</p>
+                    <p class="product--price font-14 m-0">
+                        <span
+                            class="text-secondary"><del>{{p.price | currency: 'VND':'symbol-narrow':'.3' }}</del></span>
+                        <span class="ml-2">{{p.salePrice | currency: 'VND':'symbol-narrow':'.3' }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination  -->
+    <div>
+        <ul class="pagination d-flex justify-content-end align-items-center">
+            <li class="page-item">
+                <a href="javascript:void(0)" (click)="searchPrevious()"><i class="fas fa-long-arrow-alt-left"></i></a>
+            </li>
+            <li class="page-item mx-2">{{products.page}}</li>
+            <li class="page-item">
+                <a href="javascript:void(0)" (click)="searchNext()"><i class="fas fa-long-arrow-alt-right"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>

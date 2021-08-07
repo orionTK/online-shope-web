@@ -1,0 +1,30 @@
+.product--img--container {
+    display        : flex;
+    flex-direction : column;
+    justify-content: space-around;
+    align-items    : center;
+
+    img {
+        width: 100%;
+    }
+}
+
+.side-img {
+    width : 5rem;
+
+    img {
+        width: 100%;
+    }
+}
+
+.btn--cart {
+    margin-left: 0.5rem;
+}
+
+.show {
+    display:block!important;
+}
+
+.hidden {
+    display: none!important;
+}

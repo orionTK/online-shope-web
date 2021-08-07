@@ -1,0 +1,107 @@
+.carousel-item {
+    img {
+        height    : 100vh;
+        background: no-repeat cover auto;
+    }
+}
+
+.carousel-caption {
+    bottom: 25%;
+
+    .caption__title {
+        font-size     : 18px;
+        line-height   : 1.5em;
+        letter-spacing: 2px;
+    }
+
+    .caption__newarr {
+        font-family   : 'Playfair Display';
+        font-size     : 4rem;
+        text-transform: uppercase;
+    }
+
+}
+
+#banner {
+    padding: 3rem;
+}
+
+.banner__content__block {
+    position: relative;
+    overflow: hidden;
+
+    margin-bottom: 1.5rem;
+
+    img {
+        width     : 100%;
+        transition: transform .5s ease-in-out;
+    }
+
+    &:hover img {
+        transform: scale(1.05);
+    }
+}
+
+.block__title {
+    position: absolute;
+    left    : 50%;
+    bottom  : 1rem;
+
+    transform: translate(-50%, -50%);
+
+    margin : 0 auto;
+    padding: 0.75rem 2.5rem;
+
+    background-color: rgba(255, 255, 255, .95);
+
+    &:hover {
+        color     : white;
+        cursor    : pointer;
+        box-shadow: 1px 3px 0 rgba(0, 0, 0, .1);
+        background: var(--darkred);
+
+
+        transition: background 0.3s ease-out;
+    }
+}
+
+.banner__saleoff {
+    height: 410px;
+
+    padding   : 4rem 2rem 3rem;
+    background: var(--whitesmoke);
+}
+
+.blog__content__block {
+    position: relative;
+    overflow: hidden;
+
+    img {
+        width     : 100%;
+        transition: transform .5s ease-in-out;
+    }
+
+    &:hover img {
+        transform: scale(1.05);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #banner {
+        .banner__content__block, .banner__saleoff {
+            margin: 0 auto;
+            margin-bottom: 1.5rem;
+            width: 300px;
+            img {
+                width: 100%;
+            }
+        }
+    }
+    .carousel-item img {
+        width: 100%;
+        height: 100%;
+    }
+    #blog {
+        display: none;
+    }
+}

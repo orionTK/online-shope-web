@@ -1,0 +1,139 @@
+<div id="wrapper" class="d-flex">
+    <app-sidebar class="bg-gradient-primary"></app-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <nav class="navbar navbar-expand-lg bg-white shadow d-flex justify-content-end px-4">
+                <div class="d-flex justify-content-end align-items-center">
+                    <img src="./assets/images/admin-ava.png" style="width: 5%;">
+                    <span class="font-13 ml-2">Admin</span>
+                </div>
+            </nav>
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div class="p-4 d-flex font-14">
+                    <a href="#">
+                        Trang chủ >
+                    </a>
+                    <div class="ml-1">Danh sách > Khuyến mãi</div>
+                </div>
+
+                <!-- Data -->
+                <div class="card shadow container">
+                    <div class="card-header row py-3 d-flex justify-content-between">
+                        <div class="input-group col-md-8 p-0">
+                            <input class="form-control" name="first" [(ngModel)]="key" type="text"
+                                placeholder="Tìm theo tên khuyến mãi" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success my-sm-0" type="submit"
+                                    (click)="searchPromotion(1)">Tìm
+                                    kiếm</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Modal" (click)="openModal(true)">
+                            Tạo mới
+                        </button>
+                    </div>
+
+                    <div class="card-body px-1">
+                        <div class="table-responsive">
+                            <p *ngIf="!promotions"><em>Loading...</em></p>
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
+                                *ngIf="promotions.totalRecord>0">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>Mã giảm giá</th>
+                                        <th>Tên sự kiện giảm giá</th>
+                                        <th>Phần trăm khuyến mãi</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                <tbody>
+                                    <tr *ngFor="let p of promotions.data" class="text-center">
+                                        <td>{{ p.promotionId }}</td>
+                                        <td>{{ p.promotionName }}</td>
+                                        <td>{{ p.salePercent }}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModal" (click)="openModal(false,p)">
+                                                    <i class="fas fa-edit"></i></button>
+                                                <button id="delete" class="btn btn-danger" (click)="deleteModal(p)"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-footer dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                        <ul class="pagination  m-0 d-flex justify-content-end">
+                            <li class="paginate_button page-item previous ">
+                                <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0"
+                                    (click)="searchPrevious()" tabindex="0" class="page-link">Trước</a>
+                            </li>
+                            <li class="paginate_button page-item active">
+                                <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+                                    class="page-link">{{ promotions.page }}</a>
+                            <li class="paginate_button page-item next">
+                                <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="4"
+                                    (click)="searchNext()" tabindex="0" class="page-link">Sau</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CREATE AND UPDATE -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" *ngIf="!isEdit" id="exampleModalLabel" (click)="addPromotion()">Tạo mới</h5>
+                <h5 class="modal-title" *ngIf="isEdit" id="exampleModalLabel" (click)="updatePromotion()">Chỉnh sửa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tên sự kiện giảm giá</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [(ngModel)]="promotion.promotionName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Phần trăm khuyến mãi (%)</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="number" min="0" max="100" [(ngModel)]="promotion.discount">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" (click)="addPromotion()" *ngIf="!isEdit" class="btn btn-success">Tạo
+                    mới</button>
+                <button type="button" (click)="updatePromotion()" *ngIf="isEdit" class="btn btn-success">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL DELETE PROMOTION -->
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bạn có chắc chắn xóa?</h5>
+            </div>
+            <div class="modal-body">
+                <p>Sau khi xóa sẽ không thể phục hồi.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Trở về</button>
+                <button type="button" (click)="deletePromotion(promotion)" class="btn btn-danger">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>

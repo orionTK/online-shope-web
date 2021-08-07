@@ -1,0 +1,8 @@
+<body>
+  <app-navbar *ngIf="router.url !== '/admin' && router.url !== '/admin-products' && router.url !== '/admin-promotion' &&
+  router.url !== '/admin-category' && router.url !== '/check-out'"></app-navbar>
+  <router-outlet></router-outlet>
+  <app-footer *ngIf="router.url !== '/admin' && router.url !== '/login' && router.url !== '/signup' && router.url !==
+  '/admin-user' && router.url !== '/admin-products' && router.url !== '/admin-category' && router.url !==
+  '/admin-promotion'"></app-footer>
+</body>

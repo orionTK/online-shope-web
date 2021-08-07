@@ -1,0 +1,63 @@
+@media only screen and (max-width: 768px) {
+
+    // WOMEN & MEN
+    .txt--title {
+        width      : 100%;
+        margin-left: 0;
+    }
+
+    .product--block--container {
+        margin-left: 0;
+    }
+
+    // CONTACT
+    #map {
+        padding-left: 1.5rem;
+
+        iframe {
+            width: 100%;
+        }
+    }
+
+    // LOGIN
+    #login {
+        .container {
+            margin: 1rem 0 !important;
+        }
+
+        .txt-login {
+            margin-bottom: 1.5rem !important;
+        }
+
+        .btn-login,
+        .question--login {
+            margin-top: 1rem !important;
+        }
+
+        .login--img {
+            display: none;
+        }
+    }
+
+    // SIGNUP
+    #signup {
+        .container {
+            margin: 1rem 0 !important;
+        }
+
+        .signup--img {
+            display: none;
+        }
+    }
+
+    // PRODUCT DETAILS
+    #product-details {
+        select, input {
+            margin: 0 1rem;
+        }
+    }
+    .btn--cart {
+        margin: 1rem 1rem 0 1rem!important;
+    }
+
+}

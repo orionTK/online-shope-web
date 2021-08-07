@@ -1,0 +1,268 @@
+<div id="wrapper" class="d-flex">
+    <app-sidebar class="bg-gradient-primary"></app-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <nav class="navbar navbar-expand-lg bg-white shadow d-flex justify-content-end pr-5">
+                <div class="d-flex justify-content-end align-items-center">
+                    <img src="./assets/images/admin-ava.png" style="width: 5%;">
+                    <span class="font-13 ml-2">Admin</span>
+                </div>
+            </nav>
+
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row d-flex align-items-baseline pl-3 pr-4 mt-4">
+                    <div class="col-5">
+                        <div class="content-top d-flex font-14">
+                            <a href="#">
+                                Trang chủ >
+                            </a>
+                            <div class="ml-1">Danh sách > Sản phẩm</div>
+                        </div>
+                    </div>
+                    <div class="col-7 input-group">
+                        <input class="form-control" [(ngModel)]="key" type="search"
+                            placeholder="Tìm kiếm theo tên sản phẩm" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+                                (click)="searchProduct(1)">Tìm
+                                kiếm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Tables-->
+                <div class="card shadow my-4">
+                    <div class="row card-header d-flex align-items-baseline m-0 py-0 px-2">
+                        <p class="col-md-5 font-13">* Đơn vị Giá sản phẩm: 1.000 VND</p>
+                        <div class="col-md-7 py-3 d-flex justify-content-end">
+                            <button type="button" class="btn btn-success px-4" data-toggle="modal" data-target="#Modal" (click)="openModal(true)">
+                                Tạo mới
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <p *ngIf="!products"><em>Loading...</em></p>
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
+                                *ngIf="products.totalRecord>0">
+                                <thead>
+                                    <tr class="font-14">
+                                        <th class="text-center">#</th>
+                                        <th>Tên</th>
+                                        <th class="text-center">Loại</th>
+                                        <th class="text-center">Giá gốc</th>
+                                        <th class="text-center">%</th>
+                                        <th class="text-center">Giá sale</th>
+                                        <th class="text-center">Tồn kho</th>
+                                        <th class="text-center">Ngày tạo</th>
+                                        <th class="text-center" width="12%">Hình ảnh</th>
+                                        <th class="text-center">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="font-13">
+                                    <tr *ngFor="let p of products.data">
+                                        <td class="text-center">{{ p.productId }}</td>
+                                        <td>{{ p.productName }}</td>
+                                        <td class="text-center">{{ p.categoryId }}</td>
+                                        <td class="text-center">{{ p.price | currency: 'VND':'symbol-narrow':'.0' }}
+                                        </td>
+                                        <td class="text-center">{{ p.salePercent }}</td>
+                                        <td class="text-center">{{ p.salePrice | currency: 'VND':'symbol-narrow':'.0' }}
+                                        </td>
+                                        <td class="text-center">{{ p.stock }}</td>
+                                        <td class="text-center">{{ p.dateCreate| date:'dd-MM-yyyy' }}</td>
+                                        <td class="text-center"><img src="https://{{p.imageSource}}" width="100%"></td>
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModal" (click)="openModal(false,p)">
+                                                    <i class="fas fa-edit"></i></button>
+                                                <button id="delete" class="btn btn-danger" (click)="deleteModal(p)"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-footer dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                        <ul class="pagination  m-0 d-flex justify-content-end">
+                            <li class="paginate_button page-item previous ">
+                                <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="0"
+                                    (click)="searchPrevious()" tabindex="0" class="page-link">Trước</a>
+                            </li>
+                            <li class="paginate_button page-item active">
+                                <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+                                    class="page-link">{{ products.page }}</a>
+                            <li class="paginate_button page-item next">
+                                <a href="javascript:void(0);" aria-controls="dataTable" data-dt-idx="4"
+                                    (click)="searchNext()" tabindex="0" class="page-link">Sau</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--MODAL CREATE AND UPDATE PRODUCT -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" *ngIf="!isEdit" id="exampleModalLabel">Tạo mới</h5>
+                <h5 class="modal-title" *ngIf="isEdit" id="exampleModalLabel">Chỉnh sửa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tên sản phẩm</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [(ngModel)]="product.productName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Loại sản phẩm</label>
+                    <div class="col-sm-8">
+                        <select [(ngModel)]='product.categoryId'>
+                            <option *ngFor="let category of categories.data" [ngValue]="category.categoryId">
+                                {{category.categoryName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Giá</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" [(ngModel)]="product.price">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Số lượng</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" [(ngModel)]="product.stock">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Mô tả</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [(ngModel)]="product.description">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Hình ảnh</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [(ngModel)]="product.imageSource">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Giảm giá (%)</label>
+                    <div class="col-sm-8">
+                        <select [(ngModel)]='product.promotionId'>
+                            <option *ngFor="let prom of promotion.data" [ngValue]="prom.promotionId">
+                                {{prom.discount}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" (click)="addProduct()" *ngIf="!isEdit" class="btn btn-success">Tạo
+                    mới</button>
+                <button type="button" (click)="updateProduct()" *ngIf="isEdit" class="btn btn-success">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" *ngIf="!isEdit" id="exampleModalLabel">Tạo mới</h5>
+                <h5 class="modal-title" *ngIf="isEdit" id="exampleModalLabel">Chỉnh sửa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Tên sản phẩm</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [(ngModel)]="product.productName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Loại sản phẩm</label>
+                    <div class="col-sm-8">
+                        <select [(ngModel)]='product.categoryId'>
+                            <option *ngFor="let category of categories.data" [ngValue]="category.categoryId">
+                                {{category.categoryName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Giá</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" [(ngModel)]="product.price">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Số lượng</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" [(ngModel)]="product.stock">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Mô tả</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [(ngModel)]="product.description">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Hình ảnh</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" [(ngModel)]="product.imageSource">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Giảm giá (%)</label>
+                    <div class="col-sm-8">
+                        <select [(ngModel)]='product.promotionId'>
+                            <option *ngFor="let prom of promotion.data" [ngValue]="prom.promotionId">
+                                {{prom.discount}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" (click)="addProduct()" *ngIf="!isEdit" class="btn btn-success">Tạo
+                    mới</button>
+                <button type="button" (click)="updateProduct()" *ngIf="isEdit" class="btn btn-success">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DELETE PRODUCT -->
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bạn có chắc chắn xóa sản phẩm này?</h5>
+            </div>
+            <div class="modal-body">
+                <p>Sản phẩm sau khi xóa sẽ không thể phục hồi.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Trở về</button>
+                <button type="button" (click)="deleteProduct(product)" class="btn btn-danger">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
